@@ -15,6 +15,8 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Reflection;
+using Microsoft.Win32;
+using System.Globalization;
 
 namespace Stash
 {
@@ -23,8 +25,14 @@ namespace Stash
         public Form1()
         {
             InitializeComponent();
-            string userLocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            MessageBox.Show(userLocalAppData);
+        string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            MessageBox.Show(commonAppData);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam\ActiveProcess");
+            object activeUserValue = key.GetValue("ActiveUser");
+            string steamIdHex = ((int)activeUserValue).ToString("X");
+            int steamId = (int)activeUserValue;
+            int steamId2 = int.Parse(steamIdHex, NumberStyles.HexNumber);
+            MessageBox.Show(steamId2.ToString());
             // Load existing data from the file if it exists
             List<GameData> existingData = LoadGameData();
 
