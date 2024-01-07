@@ -23,54 +23,97 @@ namespace Stash
         public Form1()
         {
             InitializeComponent();
+            string userLocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            MessageBox.Show(userLocalAppData);
+            // Load existing data from the file if it exists
+            List<GameData> existingData = LoadGameData();
+
+            // Create controls for each game and add them to the flow layout panel
+            foreach (var gameData in existingData)
+            {
+                CreateGameControls(gameData);
+            }
         }
 
-        private void UpFearHunger_Click(object sender, EventArgs e)
+        // Helper method to load existing data from the file
+        private List<GameData> LoadGameData()
         {
-            GoogleDriveAPIManager driveManager = new GoogleDriveAPIManager();
+            string filePath = "gameinfo.json"; // Specify the path where you want to save the file
 
-            // Specify the file to upload.
-            string folderPath = @"C:\Program Files (x86)\Steam\steamapps\common\Fear & Hunger\www\save\";
-
-            // Create or get the "Stash" folder ID
-            string stashFolderId = driveManager.GetOrCreateFolder("Stash");
-
-            // Create or get the "Fear and Hunger" folder ID inside the "Stash" folder
-            string fearAndHungerFolderId = driveManager.GetOrCreateFolder("Fear and Hunger", stashFolderId);
-
-            if (string.IsNullOrEmpty(stashFolderId) || string.IsNullOrEmpty(fearAndHungerFolderId))
+            if (System.IO.File.Exists(filePath))
             {
-                Console.WriteLine("Failed to create or get required folders.");
-                return;
+                string json = System.IO.File.ReadAllText(filePath);
+
+                // Check if the JSON is an array
+                if (!string.IsNullOrEmpty(json) && json[0] == '[')
+                {
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameData>>(json);
+                }
             }
 
-            driveManager.UploadFiles(folderPath, fearAndHungerFolderId);
+            return new List<GameData>();
         }
 
-
-
-
-        private void DownFearHunger_Click(object sender, EventArgs e)
+        // Create controls for a game and add them to the flow layout panel
+        private void CreateGameControls(GameData gameData)
         {
-            GoogleDriveAPIManager driveManager = new GoogleDriveAPIManager();
+            SaveFileActionManager saveFileAction = new SaveFileActionManager();
+            // Create PictureBox
+            PictureBox pictureBox = new PictureBox();
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "GameImages", gameData.ImageName);
+            path = Path.ChangeExtension(path, "jpg");
+            pictureBox.ImageLocation = path;
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Width = 140; // Set the width as per your requirements
+            pictureBox.Height = 87; // Set the height as per your requirements
 
-            // Specify the local folder to download the files.
-            string folderPath = @"C:\Program Files (x86)\Steam\steamapps\common\Fear & Hunger\www\save\";
 
-            // Create or get the "Stash" folder ID
-            string stashFolderId = driveManager.GetOrCreateFolder("Stash");
+            // Create Label 1
+            Label label1 = new Label();
+            label1.Text = gameData.GameName;
+            label1.Margin = new Padding(10, 35, 0, 0); // Set left and top margins
 
-            // Create or get the "Fear and Hunger" folder ID inside the "Stash" folder
-            string fearAndHungerFolderId = driveManager.GetOrCreateFolder("Fear and Hunger", stashFolderId);
+            // Create Label 2
+            Label label2 = new Label();
+            label2.Name= gameData.GameName;
+            label2.Text = "Please Select Action";
+            label2.Width = 100;
+            label2.Margin = new Padding(40, 35, 0, 0); // Set left and top margins
 
-            if (string.IsNullOrEmpty(stashFolderId) || string.IsNullOrEmpty(fearAndHungerFolderId))
-            {
-                Console.WriteLine("Failed to create or get required folders.");
-                return;
-            }
 
-            driveManager.DownloadFiles(folderPath, fearAndHungerFolderId);
+            // Create Button 1
+            Button button1 = new Button();
+            button1.Text = "Upload"; // Customize the button text as needed
+            button1.Width = 100; // Set the width as per your requirements
+            button1.Height = 45; // Set the height as per your requirements
+            button1.Margin = new Padding(110, 20, 0, 0); // Set left and top margins
+            button1.Click += (sender, e) => saveFileAction.UploadFiles(gameData.SaveFileLoc, gameData.GameName);
+
+
+            // Create Button 2
+            Button button2 = new Button();
+            button2.Text = "Download"; // Customize the button text as needed
+            button2.Width = 100; // Set the width as per your requirements
+            button2.Height = 45; // Set the height as per your requirements
+            button2.Margin = new Padding(35, 20, 0, 0); // Set left and top margins
+            button2.Click += (sender, e) => saveFileAction.DownloadFiles(gameData.SaveFileLoc, gameData.GameName);
+
+            // Add event handlers for the buttons if needed
+
+            // Add controls to the flow layout panel
+            flowLayoutPanel.Controls.Add(pictureBox);
+            flowLayoutPanel.Controls.Add(label1);
+            flowLayoutPanel.Controls.Add(label2);
+            flowLayoutPanel.Controls.Add(button1);
+            flowLayoutPanel.Controls.Add(button2);
         }
 
+        private void AddGame_Click(object sender, EventArgs e)
+        {
+            AddGameToJSON form = new AddGameToJSON();
+            form.Show();
+        }
+
+        
     }
 }

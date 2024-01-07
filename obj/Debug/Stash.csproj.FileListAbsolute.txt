@@ -56,3 +56,4 @@ C:\Users\shane\Github\Stash1\obj\Debug\Stash.csproj.CoreCompileInputs.cache
 C:\Users\shane\Github\Stash1\obj\Debug\Stash.csproj.CopyComplete
 C:\Users\shane\Github\Stash1\obj\Debug\Stash.exe
 C:\Users\shane\Github\Stash1\obj\Debug\Stash.pdb
+C:\Users\shane\Github\Stash1\obj\Debug\Stash.AddGameToJSON.resources
