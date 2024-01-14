@@ -102,45 +102,73 @@ namespace Stash
 
         public void UploadFiles(string folderPath, string parentFolderId)
         {
-            var filesToUpload = Directory.GetFiles(folderPath);
+            UploadDirectory(folderPath, parentFolderId);
 
-            if (filesToUpload.Length == 0)
-            {
-                Console.WriteLine("No files found in the folder to upload.");
-                return;
-            }
+            MessageBox.Show("Upload completed.");
+        }
+
+        private void UploadDirectory(string folderPath, string parentFolderId)
+        {
+            var filesToUpload = Directory.GetFiles(folderPath);
+            var directoriesToUpload = Directory.GetDirectories(folderPath);
 
             foreach (var filePath in filesToUpload)
             {
-                var fileName = Path.GetFileName(filePath);
-
-                var existingFile = GetFileByName(fileName, parentFolderId);
-
-                if (existingFile != null)
-                {
-                    using (var fileStream = new FileStream(filePath, FileMode.Open))
-                    {
-                        var updateRequest = _service.Files.Update(new Google.Apis.Drive.v3.Data.File(), existingFile.Id, fileStream, "application/octet-stream");
-                        updateRequest.Upload();
-                    }
-                }
-                else
-                {
-                    var fileMetadata = new Google.Apis.Drive.v3.Data.File()
-                    {
-                        Name = fileName,
-                        Parents = new List<string> { parentFolderId },
-                    };
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Open))
-                    {
-                        var createRequest = _service.Files.Create(fileMetadata, fileStream, "application/octet-stream");
-                        createRequest.Upload();
-                    }
-                }
+                UploadFile(filePath, parentFolderId);
             }
 
-            MessageBox.Show("Upload completed.");
+            foreach (var directoryPath in directoriesToUpload)
+            {
+                var directoryName = new DirectoryInfo(directoryPath).Name;
+                var subfolderId = CreateSubfolder(directoryName, parentFolderId);
+                UploadDirectory(directoryPath, subfolderId);
+            }
+        }
+
+        private void UploadFile(string filePath, string parentFolderId)
+        {
+            var fileName = Path.GetFileName(filePath);
+
+            var existingFile = GetFileByName(fileName, parentFolderId);
+
+            if (existingFile != null)
+            {
+                using (var fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    var updateRequest = _service.Files.Update(new Google.Apis.Drive.v3.Data.File(), existingFile.Id, fileStream, "application/octet-stream");
+                    updateRequest.Upload();
+                }
+            }
+            else
+            {
+                var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                {
+                    Name = fileName,
+                    Parents = new List<string> { parentFolderId },
+                };
+
+                using (var fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    var createRequest = _service.Files.Create(fileMetadata, fileStream, "application/octet-stream");
+                    createRequest.Upload();
+                }
+            }
+        }
+
+        private string CreateSubfolder(string folderName, string parentFolderId)
+        {
+            var folderMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = folderName,
+                MimeType = "application/vnd.google-apps.folder",
+                Parents = new List<string> { parentFolderId },
+            };
+
+            var folderRequest = _service.Files.Create(folderMetadata);
+            folderRequest.Fields = "id";
+            var folder = folderRequest.Execute();
+
+            return folder.Id;
         }
 
         public void DownloadFiles(string folderPath, string parentFolderId)

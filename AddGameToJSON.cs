@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace Stash
 {
     public partial class AddGameToJSON : Form
     {
+        string generalFileLoc;
         public AddGameToJSON()
         {
             InitializeComponent();
@@ -21,8 +24,11 @@ namespace Stash
         {
             // Get the values from the textboxes
             string gameName = GameNameTB.Text;
-            string imageName = ImageNameTB.Text;
+            gameName = gameName.Replace("'", ""); // Removes quote char as it breaks google drive
+            string imageName = GameNameTB.Text;
             string saveFileLoc = SaveFileLocTB.Text;
+
+            string saveFileLocUpdate = SaveFileLocTB.Text + "\\";
 
             // Load existing data from the file if it exists
             List<GameData> existingData = LoadGameData();
@@ -32,7 +38,8 @@ namespace Stash
             {
                 GameName = gameName,
                 ImageName = imageName,
-                SaveFileLoc = saveFileLoc
+                SaveFileLoc = saveFileLocUpdate,
+                GeneralFileLoc = generalFileLoc
             };
 
             // Add the new data to the existing list
@@ -65,6 +72,65 @@ namespace Stash
             }
 
             return new List<GameData>();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All Files|*.*";
+                openFileDialog.Title = "Select an image file";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // Get the selected file path
+                        string filePath = openFileDialog.FileName;
+
+                        // Get the destination directory (GameImages)
+                        string destinationDirectory = Path.Combine(Application.StartupPath, "GameImages");
+
+                        // Create the destination directory if it doesn't exist
+                        if (!Directory.Exists(destinationDirectory))
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+
+                        // Get the new file name from the TextBox
+                        string newFileName = Path.Combine(destinationDirectory, GameNameTB.Text + ".jpg");
+
+                        // Move and rename the file
+                        File.Move(filePath, newFileName);
+
+                        MessageBox.Show("Image sucessfuly taken");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            generalFileLoc = "SteamUserData";
+        }
+
+        private void radioButtonSteamApp_CheckedChanged(object sender, EventArgs e)
+        {
+            generalFileLoc = "SteamCommonApps";
+        }
+
+        private void radioButtonDocs_CheckedChanged(object sender, EventArgs e)
+        {
+            generalFileLoc = "Documents";
+        }
+
+        private void radioButtonUserdataLoc_CheckedChanged(object sender, EventArgs e)
+        {
+            generalFileLoc = "UserDataLocal";
         }
     }
 }

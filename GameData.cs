@@ -11,5 +11,7 @@ namespace Stash
         public string GameName { get; set; }
         public string ImageName { get; set; }
         public string SaveFileLoc { get; set; }
+        public string GeneralFileLoc { get; set; }
+
     }
 }
