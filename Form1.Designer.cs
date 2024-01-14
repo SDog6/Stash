@@ -29,6 +29,7 @@ namespace Stash
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.AddGame = new System.Windows.Forms.Button();
@@ -53,12 +54,17 @@ namespace Stash
             // 
             // AddGame
             // 
-            this.AddGame.Location = new System.Drawing.Point(12, 1);
+            this.AddGame.AutoSize = true;
+            this.AddGame.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AddGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.AddGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.AddGame.CausesValidation = false;
+            this.AddGame.Location = new System.Drawing.Point(13, 3);
             this.AddGame.Name = "AddGame";
-            this.AddGame.Size = new System.Drawing.Size(105, 23);
+            this.AddGame.Size = new System.Drawing.Size(26, 27);
             this.AddGame.TabIndex = 13;
-            this.AddGame.Text = "Add Game";
-            this.AddGame.UseVisualStyleBackColor = true;
+            this.AddGame.Text = "+";
+            this.AddGame.UseVisualStyleBackColor = false;
             this.AddGame.Click += new System.EventHandler(this.AddGame_Click);
             // 
             // Form1
@@ -70,9 +76,10 @@ namespace Stash
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.AddGame);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Stash";
             this.ResumeLayout(false);
             this.PerformLayout();
 

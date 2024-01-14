@@ -29,6 +29,7 @@ namespace Stash
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddGameToJSON));
             this.GameNameTB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@ namespace Stash
             // 
             // GameNameTB
             // 
+            this.GameNameTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.GameNameTB.Location = new System.Drawing.Point(186, 33);
             this.GameNameTB.Name = "GameNameTB";
             this.GameNameTB.Size = new System.Drawing.Size(100, 22);
@@ -54,25 +56,25 @@ namespace Stash
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 83);
+            this.label1.Location = new System.Drawing.Point(110, 80);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.Size = new System.Drawing.Size(50, 17);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Image";
+            this.label1.Text = "Image:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(49, 33);
+            this.label2.Location = new System.Drawing.Point(73, 35);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 17);
+            this.label2.Size = new System.Drawing.Size(87, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "GameName";
+            this.label2.Text = "GameName:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 223);
+            this.label3.Location = new System.Drawing.Point(10, 235);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(146, 17);
             this.label3.TabIndex = 3;
@@ -80,16 +82,17 @@ namespace Stash
             // 
             // SaveFileLocTB
             // 
-            this.SaveFileLocTB.Location = new System.Drawing.Point(196, 220);
+            this.SaveFileLocTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SaveFileLocTB.Location = new System.Drawing.Point(196, 232);
             this.SaveFileLocTB.Name = "SaveFileLocTB";
             this.SaveFileLocTB.Size = new System.Drawing.Size(564, 22);
             this.SaveFileLocTB.TabIndex = 5;
             // 
             // addGame
             // 
-            this.addGame.Location = new System.Drawing.Point(232, 269);
+            this.addGame.Location = new System.Drawing.Point(257, 276);
             this.addGame.Name = "addGame";
-            this.addGame.Size = new System.Drawing.Size(242, 57);
+            this.addGame.Size = new System.Drawing.Size(204, 46);
             this.addGame.TabIndex = 6;
             this.addGame.Text = "Add Game Info To Local File";
             this.addGame.UseVisualStyleBackColor = true;
@@ -97,7 +100,7 @@ namespace Stash
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(174, 83);
+            this.button1.Location = new System.Drawing.Point(186, 77);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 23);
             this.button1.TabIndex = 7;
@@ -108,7 +111,7 @@ namespace Stash
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(31, 168);
+            this.radioButton1.Location = new System.Drawing.Point(31, 180);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(129, 21);
             this.radioButton1.TabIndex = 8;
@@ -120,7 +123,7 @@ namespace Stash
             // radioButtonSteamApp
             // 
             this.radioButtonSteamApp.AutoSize = true;
-            this.radioButtonSteamApp.Location = new System.Drawing.Point(231, 168);
+            this.radioButtonSteamApp.Location = new System.Drawing.Point(231, 180);
             this.radioButtonSteamApp.Name = "radioButtonSteamApp";
             this.radioButtonSteamApp.Size = new System.Drawing.Size(142, 21);
             this.radioButtonSteamApp.TabIndex = 9;
@@ -132,7 +135,7 @@ namespace Stash
             // radioButtonDocs
             // 
             this.radioButtonDocs.AutoSize = true;
-            this.radioButtonDocs.Location = new System.Drawing.Point(429, 168);
+            this.radioButtonDocs.Location = new System.Drawing.Point(429, 180);
             this.radioButtonDocs.Name = "radioButtonDocs";
             this.radioButtonDocs.Size = new System.Drawing.Size(100, 21);
             this.radioButtonDocs.TabIndex = 10;
@@ -144,7 +147,7 @@ namespace Stash
             // radioButtonUserdataLoc
             // 
             this.radioButtonUserdataLoc.AutoSize = true;
-            this.radioButtonUserdataLoc.Location = new System.Drawing.Point(600, 168);
+            this.radioButtonUserdataLoc.Location = new System.Drawing.Point(600, 180);
             this.radioButtonUserdataLoc.Name = "radioButtonUserdataLoc";
             this.radioButtonUserdataLoc.Size = new System.Drawing.Size(126, 21);
             this.radioButtonUserdataLoc.TabIndex = 11;
@@ -156,7 +159,7 @@ namespace Stash
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(313, 130);
+            this.label4.Location = new System.Drawing.Point(280, 142);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(164, 17);
             this.label4.TabIndex = 12;
@@ -176,7 +179,7 @@ namespace Stash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(769, 365);
             this.Controls.Add(this.labelImage);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.radioButtonUserdataLoc);
@@ -190,8 +193,9 @@ namespace Stash
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.GameNameTB);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddGameToJSON";
-            this.Text = "AddGameToJSON";
+            this.Text = "Add a game ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
