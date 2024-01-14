@@ -56,6 +56,7 @@ namespace Stash
 
             // Optionally, you can show a message to indicate successful save
             MessageBox.Show("Game data saved successfully!");
+            labelImage.Visible = false;
             parentForm.LoadData();
         }
 
@@ -79,6 +80,11 @@ namespace Stash
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(GameNameTB.Text))
+            {
+                MessageBox.Show("Write down game name first");
+                return;
+            }
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All Files|*.*";
