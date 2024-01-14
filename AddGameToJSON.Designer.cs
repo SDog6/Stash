@@ -41,6 +41,7 @@ namespace Stash
             this.radioButtonDocs = new System.Windows.Forms.RadioButton();
             this.radioButtonUserdataLoc = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
+            this.labelImage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // GameNameTB
@@ -161,11 +162,22 @@ namespace Stash
             this.label4.TabIndex = 12;
             this.label4.Text = "General Path to save file";
             // 
+            // labelImage
+            // 
+            this.labelImage.AutoSize = true;
+            this.labelImage.Location = new System.Drawing.Point(327, 86);
+            this.labelImage.Name = "labelImage";
+            this.labelImage.Size = new System.Drawing.Size(155, 17);
+            this.labelImage.TabIndex = 13;
+            this.labelImage.Text = "Image sucessfuly taken";
+            this.labelImage.Visible = false;
+            // 
             // AddGameToJSON
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelImage);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.radioButtonUserdataLoc);
             this.Controls.Add(this.radioButtonDocs);
@@ -199,5 +211,6 @@ namespace Stash
         private System.Windows.Forms.RadioButton radioButtonDocs;
         private System.Windows.Forms.RadioButton radioButtonUserdataLoc;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelImage;
     }
 }

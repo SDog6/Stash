@@ -26,13 +26,21 @@ namespace Stash
         {
             InitializeComponent();
             // Load existing data from the file if it exists
+            LoadData();
+        }
+
+        public void LoadData()
+        {
+            flowLayoutPanel.Controls.Clear();
+
             List<GameData> existingData = LoadGameData();
 
             // Create controls for each game and add them to the flow layout panel
             foreach (var gameData in existingData)
             {
                 CreateGameControls(gameData);
-                MessageBox.Show(BuildFullPath(gameData.GeneralFileLoc, gameData.SaveFileLoc));
+                // Commented out a Debug the path
+                //MessageBox.Show(BuildFullPath(gameData.GeneralFileLoc, gameData.SaveFileLoc));
             }
         }
 
@@ -48,7 +56,12 @@ namespace Stash
                 // Check if the JSON is an array
                 if (!string.IsNullOrEmpty(json) && json[0] == '[')
                 {
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameData>>(json);
+                    List<GameData> loadedData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameData>>(json);
+
+                    // Check for duplicates and remove them
+                    loadedData = loadedData.Distinct().ToList();
+
+                    return loadedData;
                 }
             }
 
@@ -76,7 +89,7 @@ namespace Stash
 
             // Create Label 2
             Label label2 = new Label();
-            label2.Name= gameData.GameName;
+            label2.Name = gameData.GameName + "Action";
             label2.Text = "Please Select Action";
             label2.Width = 100;
             label2.Margin = new Padding(40, 35, 0, 0); // Set left and top margins
@@ -89,7 +102,13 @@ namespace Stash
             button1.Height = 45; // Set the height as per your requirements
             button1.Margin = new Padding(110, 20, 0, 0); // Set left and top margins
             string fullpath = BuildFullPath(gameData.GeneralFileLoc, gameData.SaveFileLoc);
-            button1.Click += (sender, e) => saveFileAction.UploadFiles(fullpath, gameData.GameName);
+            button1.Click += (sender, e) =>
+            {
+                label2.Text = "Uploading";
+                saveFileAction.UploadFiles(fullpath, gameData.GameName);
+                label2.Text = "Done";
+            };
+
 
 
             // Create Button 2
@@ -98,7 +117,12 @@ namespace Stash
             button2.Width = 100; // Set the width as per your requirements
             button2.Height = 45; // Set the height as per your requirements
             button2.Margin = new Padding(35, 20, 0, 0); // Set left and top margins
-            button2.Click += (sender, e) => saveFileAction.DownloadFiles(fullpath, gameData.GameName);
+            button2.Click += (sender, e) =>
+            {
+                label2.Text = "Downloading";
+                saveFileAction.DownloadFiles(fullpath, gameData.GameName);
+                label2.Text = "Done";
+            };
 
             // Add event handlers for the buttons if needed
 
@@ -112,7 +136,7 @@ namespace Stash
 
         private void AddGame_Click(object sender, EventArgs e)
         {
-            AddGameToJSON form = new AddGameToJSON();
+            AddGameToJSON form = new AddGameToJSON(this);
             form.Show();
         }
 

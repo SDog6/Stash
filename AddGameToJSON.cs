@@ -14,10 +14,12 @@ namespace Stash
 {
     public partial class AddGameToJSON : Form
     {
-        string generalFileLoc;
-        public AddGameToJSON()
+        private string generalFileLoc;
+        private Form1 parentForm;
+        public AddGameToJSON(Form1 parentForm)
         {
             InitializeComponent();
+            this.parentForm = parentForm;
         }
 
         private void addGame_Click(object sender, EventArgs e)
@@ -54,6 +56,7 @@ namespace Stash
 
             // Optionally, you can show a message to indicate successful save
             MessageBox.Show("Game data saved successfully!");
+            parentForm.LoadData();
         }
 
         // Helper method to load existing data from the file
@@ -103,7 +106,8 @@ namespace Stash
                         // Move and rename the file
                         File.Move(filePath, newFileName);
 
-                        MessageBox.Show("Image sucessfuly taken");
+                        //MessageBox.Show("Image sucessfuly taken");
+                        labelImage.Visible = true; 
                     }
                     catch (Exception ex)
                     {
