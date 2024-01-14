@@ -59,7 +59,7 @@ namespace Stash
             this.AddGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.AddGame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.AddGame.CausesValidation = false;
-            this.AddGame.Location = new System.Drawing.Point(13, 3);
+            this.AddGame.Location = new System.Drawing.Point(13, 0);
             this.AddGame.Name = "AddGame";
             this.AddGame.Size = new System.Drawing.Size(26, 27);
             this.AddGame.TabIndex = 13;

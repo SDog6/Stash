@@ -27,6 +27,7 @@ namespace Stash
             InitializeComponent();
             // Load existing data from the file if it exists
             LoadData();
+            flowLayoutPanel.BackColor = System.Drawing.Color.LightGray;
         }
 
         public void LoadData()
@@ -85,12 +86,14 @@ namespace Stash
             // Create Label 1
             Label label1 = new Label();
             label1.Text = gameData.GameName;
+            label1.Font = new System.Drawing.Font("Arial", 9, System.Drawing.FontStyle.Bold);
             label1.Margin = new Padding(10, 35, 0, 0); // Set left and top margins
 
             // Create Label 2
             Label label2 = new Label();
             label2.Name = gameData.GameName + "Action";
-            label2.Text = "Please Select Action";
+            label2.Text = "Select Action";
+            label2.Font = new System.Drawing.Font("Arial", 9, System.Drawing.FontStyle.Bold);
             label2.Width = 100;
             label2.Margin = new Padding(40, 35, 0, 0); // Set left and top margins
 
@@ -101,6 +104,7 @@ namespace Stash
             button1.Width = 100; // Set the width as per your requirements
             button1.Height = 45; // Set the height as per your requirements
             button1.Margin = new Padding(110, 20, 0, 0); // Set left and top margins
+            button1.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Bold);
             string fullpath = BuildFullPath(gameData.GeneralFileLoc, gameData.SaveFileLoc);
             button1.Click += (sender, e) =>
             {
@@ -117,6 +121,7 @@ namespace Stash
             button2.Width = 100; // Set the width as per your requirements
             button2.Height = 45; // Set the height as per your requirements
             button2.Margin = new Padding(35, 20, 0, 0); // Set left and top margins
+            button2.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Bold);
             button2.Click += (sender, e) =>
             {
                 label2.Text = "Downloading";
